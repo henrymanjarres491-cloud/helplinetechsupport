@@ -64,6 +64,27 @@
     gap: 16px;
   }
 
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--grey);
+    transition: color 0.15s ease;
+  }
+
+  .nav-links a:hover { color: var(--black); }
+
+  @media (max-width: 800px) {
+    .nav-links { display: none; }
+  }
+
   .brand {
     display: flex;
     align-items: center;
@@ -471,6 +492,121 @@
     text-align: center;
   }
 
+  /* Pricing */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .price-card {
+    background: var(--white);
+    padding: 40px 34px;
+  }
+
+  .price-card.highlight {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .price-card .price-label {
+    font-size: 0.92rem;
+    color: var(--grey);
+    margin-bottom: 18px;
+  }
+
+  .price-card.highlight .price-label { color: var(--grey-light); }
+
+  .price-card .price-amount {
+    font-family: 'Newsreader', serif;
+    font-size: 2.6rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .price-card .price-amount span {
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--grey);
+    font-weight: 400;
+  }
+
+  .price-card.highlight .price-amount span { color: var(--grey-light); }
+
+  .price-card p.price-desc {
+    color: var(--grey);
+    font-size: 0.98rem;
+    margin: 14px 0 0;
+  }
+
+  .price-card.highlight p.price-desc { color: #B8B8B8; }
+
+  .price-note {
+    margin-top: 28px;
+    color: var(--grey);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 640px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 46px;
+    align-items: start;
+  }
+
+  .about-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--off-white, #F2F2EF);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-photo .placeholder-icon {
+    width: 56px;
+    height: 56px;
+    color: var(--grey-light);
+  }
+
+  .about-text p {
+    color: var(--grey);
+    font-size: 1.06rem;
+    margin: 0 0 18px;
+  }
+
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .about-text .signoff {
+    margin-top: 26px;
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--black);
+  }
+
+  @media (max-width: 700px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { width: 140px; height: 140px; }
+  }
+
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-side { border-top: none; padding-top: 0; }
@@ -526,6 +662,12 @@
       </span>
       HelpLine Home Tech
     </div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
     <button class="call-btn" data-call-trigger>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       Call Now
@@ -620,6 +762,29 @@
   </div>
 </section>
 
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">Pricing</p>
+      <h2>Simple, upfront, no surprises</h2>
+      <p class="dek">One flat rate. No per-minute charges, no hidden fees, no fine print to squint at.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card highlight">
+        <p class="price-label">First call</p>
+        <div class="price-amount">Free</div>
+        <p class="price-desc">On us, always. Try it out with no risk before you decide it's worth calling again.</p>
+      </div>
+      <div class="price-card">
+        <p class="price-label">Every call after</p>
+        <div class="price-amount">$20 <span>/ call</span></div>
+        <p class="price-desc">One flat price no matter how long it takes. We won't rush you off the phone.</p>
+      </div>
+    </div>
+    <p class="price-note">Family members can also set up support on someone else's behalf, just call and let us know.</p>
+  </div>
+</section>
+
 <section class="security">
   <div class="wrap">
     <div class="section-head">
@@ -648,6 +813,27 @@
     <div class="security-callout">
       <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <p><strong>If someone calls claiming to be us and asks for money, a gift card, or remote access out of nowhere, it isn't us.</strong> Hang up and call the number on this page directly to confirm.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">Who's behind this</p>
+      <h2>About Me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-photo">
+        <!-- Replace this placeholder with your photo: <img src="henry.jpg" alt="Henry Manjarres"> -->
+        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="about-text">
+        <p>Hi, I'm Henry Manjarres. I'm based in Las Vegas, and I started HelpLine Home Tech because I've always been the person people call when something stops working.</p>
+        <p>I've got a strong interest in technology, and I genuinely enjoy learning about new tech, computers, and how things work under the hood. But what I like even more is helping people, and finding ways to make things easier for someone who's stuck.</p>
+        <p>I'm a curious, adventurous person. I like trying new things, exploring new ideas, and picking up whatever I can from different experiences. I'm always looking for a chance to learn something new, sharpen my skills, and put that knowledge to use helping other people.</p>
+        <p class="signoff">Call anytime during support hours, I'm happy to help.</p>
+      </div>
     </div>
   </div>
 </section>

@@ -85,6 +85,83 @@
     .nav-links { display: none; }
   }
 
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    flex-shrink: 0;
+  }
+
+  .menu-toggle svg { width: 22px; height: 22px; }
+
+  @media (max-width: 800px) {
+    .menu-toggle { display: flex; }
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 68px;
+    z-index: 49;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    padding: 16px 24px;
+    text-decoration: none;
+    color: var(--black);
+    font-size: 1.02rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-menu a:first-child { border-top: none; }
+
+  /* Jump nav / bookmarks */
+  .jump-nav {
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .jump-nav::-webkit-scrollbar { display: none; }
+
+  .jump-nav-inner {
+    display: flex;
+    gap: 10px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .jump-nav a {
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--black);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 9px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .jump-nav a:hover {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
   .brand {
     display: flex;
     align-items: center;
@@ -504,7 +581,10 @@
   .price-card {
     background: var(--white);
     padding: 40px 34px;
+    transition: transform 0.2s ease;
   }
+
+  .price-card:hover { transform: translateY(-2px); }
 
   .price-card.highlight {
     background: var(--black);
@@ -643,6 +723,17 @@
     * { transition: none !important; scroll-behavior: auto !important; }
   }
 
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   a:focus-visible, button:focus-visible {
     outline: 2px solid var(--black);
     outline-offset: 3px;
@@ -663,17 +754,28 @@
       HelpLine Home Tech
     </div>
     <ul class="nav-links">
+      <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#about">About</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
     <button class="call-btn" data-call-trigger>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       Call Now
     </button>
   </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About Me</a>
+  <a href="#services">Services</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#security">Safety</a>
+  <a href="#faq">FAQ</a>
+</div>
 
 <div class="hero">
   <div class="hero-inner wrap-wide">
@@ -693,6 +795,37 @@
     </div>
   </div>
 </div>
+
+<nav class="jump-nav" aria-label="Quick section links">
+  <div class="wrap-wide jump-nav-inner">
+    <a href="#about">About Me</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#security">Safety</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">Who's behind this</p>
+      <h2>About Me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-photo">
+        <!-- Replace this placeholder with your photo: <img src="henry.jpg" alt="Henry Manjarres"> -->
+        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="about-text">
+        <p>Hi, I'm Henry Manjarres. I'm based in Las Vegas, and I started HelpLine Home Tech because I've always been the person people call when something stops working.</p>
+        <p>I've got a strong interest in technology, and I genuinely enjoy learning about new tech, computers, and how things work under the hood. But what I like even more is helping people, and finding ways to make things easier for someone who's stuck.</p>
+        <p>I'm a curious, adventurous person. I like trying new things, exploring new ideas, and picking up whatever I can from different experiences. I'm always looking for a chance to learn something new, sharpen my skills, and put that knowledge to use helping other people.</p>
+        <p class="signoff">Call anytime during support hours, I'm happy to help.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="how">
   <div class="wrap">
@@ -785,7 +918,7 @@
   </div>
 </section>
 
-<section class="security">
+<section class="security" id="security">
   <div class="wrap">
     <div class="section-head">
       <p class="section-num">Staying safe</p>
@@ -813,27 +946,6 @@
     <div class="security-callout">
       <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <p><strong>If someone calls claiming to be us and asks for money, a gift card, or remote access out of nowhere, it isn't us.</strong> Hang up and call the number on this page directly to confirm.</p>
-    </div>
-  </div>
-</section>
-
-<section id="about">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="section-num">Who's behind this</p>
-      <h2>About Me</h2>
-    </div>
-    <div class="about-grid">
-      <div class="about-photo">
-        <!-- Replace this placeholder with your photo: <img src="henry.jpg" alt="Henry Manjarres"> -->
-        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
-      <div class="about-text">
-        <p>Hi, I'm Henry Manjarres. I'm based in Las Vegas, and I started HelpLine Home Tech because I've always been the person people call when something stops working.</p>
-        <p>I've got a strong interest in technology, and I genuinely enjoy learning about new tech, computers, and how things work under the hood. But what I like even more is helping people, and finding ways to make things easier for someone who's stuck.</p>
-        <p>I'm a curious, adventurous person. I like trying new things, exploring new ideas, and picking up whatever I can from different experiences. I'm always looking for a chance to learn something new, sharpen my skills, and put that knowledge to use helping other people.</p>
-        <p class="signoff">Call anytime during support hours, I'm happy to help.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -947,6 +1059,44 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
     });
+  })();
+
+  // Mobile menu toggle
+  (function () {
+    var toggle = document.getElementById("menuToggle");
+    var menu = document.getElementById("mobileMenu");
+
+    toggle.addEventListener("click", function () {
+      var isOpen = menu.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        menu.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  })();
+
+  // Gentle reveal-on-scroll for sections
+  (function () {
+    var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced || !("IntersectionObserver" in window)) return;
+
+    var targets = document.querySelectorAll("section, .hero");
+    targets.forEach(function (el) { el.classList.add("reveal"); });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    targets.forEach(function (el) { observer.observe(el); });
   })();
 </script>
 

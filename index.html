@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HelpLine Home Tech — Phone-Based Tech Support</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='black'/%3E%3Cpath d='M43 38.2c-1.6-1.4-3.3-2.5-5.2-3.3-1-.4-2-.1-2.7.7l-1.6 2c-2.6-1.3-4.8-3.5-6.1-6.1l2-1.6c.8-.7 1.1-1.7.7-2.7-.8-1.9-1.9-3.6-3.3-5.2-.7-.8-1.9-1-2.8-.5l-2.6 1.5c-.9.5-1.4 1.6-1.1 2.6 2.2 8.4 8.8 15 17.2 17.2 1 .3 2.1-.2 2.6-1.1l1.5-2.6c.5-.9.3-2.1-.6-2.9z' fill='white'/%3E%3C/svg%3E">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --black: #0A0A0A;
+    --off-black: #1A1A1A;
+    --white: #FFFFFF;
+    --grey: #6B6B6B;
+    --grey-light: #9A9A9A;
+    --line: #DEDEDA;
+    --line-dark: #2E2E2E;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    margin: 0;
+    line-height: 1.1;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  a { color: inherit; }
+  img, svg { display: block; }
+  button { font-family: inherit; }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+  .wrap-wide { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ===== Header ===== */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+
+  header .wrap-wide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+  }
+
+  .mark {
+    width: 32px;
+    height: 32px;
+    background: var(--black);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mark svg { width: 16px; height: 16px; }
+
+  .call-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--black);
+    color: var(--white);
+    text-decoration: none;
+    border: 1px solid var(--black);
+    padding: 12px 22px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    cursor: pointer;
+    min-height: 46px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .call-btn:hover { background: var(--off-black); }
+  .call-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  .call-btn.ghost {
+    background: transparent;
+    color: var(--black);
+  }
+  .call-btn.ghost:hover { background: var(--black); color: var(--white); }
+
+  /* ===== Hero ===== */
+  .hero {
+    position: relative;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 100px 24px 90px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    background-image:
+      radial-gradient(circle, #E4E4E0 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-position: -8px -8px;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, var(--white) 78%);
+    pointer-events: none;
+  }
+
+  .hero-inner { position: relative; z-index: 1; }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 34px;
+    font-size: 0.92rem;
+    color: var(--grey);
+  }
+
+  .hero-top .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--black);
+    flex-shrink: 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 5.2vw, 4.1rem);
+    max-width: 13ch;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero-side {
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+
+  .hero-side p {
+    color: var(--grey);
+    font-size: 1.08rem;
+    margin: 22px 0 28px;
+  }
+
+  .big-call-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 18px 32px;
+    border-radius: 3px;
+    cursor: pointer;
+    min-height: 50px;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .big-call-btn:hover { background: var(--off-black); }
+  .big-call-btn:active { transform: scale(0.98); }
+  .big-call-btn svg { width: 20px; height: 20px; }
+
+  .hours-note {
+    font-size: 0.92rem;
+    color: var(--grey);
+    margin-top: 18px;
+  }
+
+  .hours-note strong { color: var(--black); }
+
+  /* ===== Sections ===== */
+  section {
+    padding: 84px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    color: var(--grey);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-num::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--grey-light);
+  }
+
+  .section-head h2 { font-size: 2.1rem; max-width: 20ch; }
+
+  .section-head p.dek {
+    color: var(--grey);
+    margin-top: 16px;
+    max-width: 52ch;
+    font-size: 1.06rem;
+  }
+
+  .section-head { margin-bottom: 50px; }
+
+  /* Steps */
+  .steps { display: grid; gap: 0; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .step:last-child { border-bottom: 1px solid var(--line); }
+
+  .step-mark {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    color: var(--grey-light);
+  }
+
+  .step h3 {
+    font-size: 1.18rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin-bottom: 7px;
+    letter-spacing: -0.01em;
+  }
+
+  .step p { color: var(--grey); margin: 0; }
+
+  /* Services */
+  .services-list { border-top: 1px solid var(--line); }
+
+  .service-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left 0.15s ease;
+  }
+
+  .service-row:hover { padding-left: 6px; }
+
+  .service-row h3 {
+    font-size: 1.08rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .service-row p { margin: 0; color: var(--grey); font-size: 0.99rem; }
+
+  /* Security */
+  .security {
+    background: var(--black);
+    color: var(--white);
+    border-bottom: none;
+    position: relative;
+  }
+
+  .security .section-num { color: var(--grey-light); }
+  .security .section-num::before { background: #4A4A4A; }
+  .security .dek { color: #ABABAB; }
+  .security h2 { color: var(--white); }
+
+  .security-grid {
+    display: grid;
+    gap: 34px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .security-item { border-top: 1px solid var(--line-dark); padding-top: 24px; }
+
+  .security-item h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-bottom: 11px;
+    letter-spacing: -0.01em;
+  }
+
+  .security-item p { color: #B8B8B8; margin: 0; font-size: 0.99rem; }
+
+  .security-callout {
+    margin-top: 48px;
+    border: 1px solid var(--line-dark);
+    padding: 28px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .security-callout svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .security-callout p { margin: 0; color: var(--white); font-size: 1.02rem; }
+  .security-callout strong { font-weight: 600; }
+
+  /* Family */
+  .family-box h2 { font-size: 2rem; max-width: 18ch; }
+
+  .family-box p {
+    color: var(--grey);
+    max-width: 52ch;
+    margin: 18px 0 32px;
+    font-size: 1.06rem;
+  }
+
+  /* FAQ */
+  .faq-item { border-top: 1px solid var(--line); padding: 26px 0; }
+  .faq-item:last-child { border-bottom: 1px solid var(--line); }
+
+  .faq-item h3 {
+    font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin-bottom: 9px;
+    letter-spacing: -0.01em;
+  }
+
+  .faq-item p { color: var(--grey); margin: 0; }
+
+  /* Footer */
+  footer { background: var(--black); color: var(--white); padding: 60px 0 38px; }
+
+  footer .wrap-wide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  footer .mark { background: var(--white); }
+  footer .brand { color: var(--white); }
+  footer .big-call-btn { background: var(--white); color: var(--black); }
+  footer .big-call-btn:hover { background: #E4E4E4; }
+  footer .hours-note { color: var(--grey-light); }
+  footer .hours-note strong { color: var(--white); }
+  footer .fine { font-size: 0.85rem; color: #6E6E6E; margin-top: 12px; }
+
+  /* ===== Modal (desktop call fallback) ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,10,0.72);
+    backdrop-filter: blur(3px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 24px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--white);
+    max-width: 440px;
+    width: 100%;
+    padding: 40px 36px 36px;
+    position: relative;
+    border-radius: 4px;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--black);
+    transition: background 0.15s ease;
+  }
+
+  .modal-close:hover { background: #F0F0EE; }
+  .modal-close svg { width: 18px; height: 18px; }
+
+  .modal-eyebrow {
+    font-size: 0.85rem;
+    color: var(--grey);
+    margin-bottom: 14px;
+  }
+
+  .modal-box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+    max-width: 20ch;
+  }
+
+  .modal-box p {
+    color: var(--grey);
+    margin: 0 0 22px;
+    font-size: 1.02rem;
+  }
+
+  .modal-number {
+    font-family: 'Newsreader', serif;
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    text-align: center;
+    margin-bottom: 10px;
+    user-select: all;
+  }
+
+  .modal-copy-note {
+    font-size: 0.85rem;
+    color: var(--grey-light);
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-side { border-top: none; padding-top: 0; }
+  }
+
+  @media (max-width: 760px) {
+    .security-grid { grid-template-columns: 1fr; }
+    .service-row { grid-template-columns: 1fr; gap: 6px; }
+    .step { grid-template-columns: 44px 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    header .wrap-wide { flex-wrap: wrap; row-gap: 10px; }
+    .big-call-btn { width: 100%; justify-content: center; }
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 16.5px; }
+    .brand { font-size: 1.08rem; }
+    .call-btn { padding: 10px 16px; font-size: 0.9rem; }
+    .hero { padding: 64px 20px 52px; }
+    .big-call-btn { font-size: 1.05rem; padding: 16px 24px; }
+    section { padding: 56px 0; }
+    .modal-number { font-size: 1.5rem; padding: 14px; }
+  }
+
+  @media (max-width: 380px) {
+    .brand { font-size: 0.95rem; }
+    .mark { width: 27px; height: 27px; }
+    .hero h1 { font-size: 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 3px;
+  }
+
+  .security a:focus-visible,
+  .security button:focus-visible { outline-color: var(--white); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap-wide">
+    <div class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </span>
+      HelpLine Home Tech
+    </div>
+    <button class="call-btn" data-call-trigger>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call Now
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner wrap-wide">
+    <div class="hero-top"><span class="dot"></span> Live support, Pacific Time</div>
+    <div class="hero-grid">
+      <div>
+        <h1>Your computer's acting up. <em>Call and we'll fix it together.</em></h1>
+      </div>
+      <div class="hero-side">
+        <p>You describe what's happening, we walk you through the fix, out loud, one step at a time. No apps to install, no waiting on hold for an hour.</p>
+        <button class="big-call-btn" data-call-trigger>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (702) 469-8064
+        </button>
+        <p class="hours-note">On a computer right now? Tap the button and we'll show you what to do.<br><strong>Hours:</strong> Weekdays 3–7 PM · Weekends 10 AM–4 PM, Pacific Time</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">How a call goes</p>
+      <h2>Three steps, start to finish</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-mark">1</div>
+        <div>
+          <h3>You call</h3>
+          <p>Dial (702) 469-8064 during support hours. Get us between calls? Leave a message and you'll hear back fast.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-mark">2</div>
+        <div>
+          <h3>We talk it through</h3>
+          <p>You tell us what's on the screen, we tell you what to tap or click. Nobody's rushed off the line.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-mark">3</div>
+        <div>
+          <h3>You're done</h3>
+          <p>The wifi's back, the video call connects, the printer finally listens. You hang up and move on with your day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">What we cover</p>
+      <h2>The calls we get most</h2>
+      <p class="dek">Not on the list? Call anyway. Most problems fit somewhere close to these.</p>
+    </div>
+    <div class="services-list">
+      <div class="service-row">
+        <h3>Password &amp; login trouble</h3>
+        <p>We confirm it's really you before touching anything account-related.</p>
+      </div>
+      <div class="service-row">
+        <h3>Internet acting up</h3>
+        <p>Slow pages, wifi that drops, a router that needs a reset.</p>
+      </div>
+      <div class="service-row">
+        <h3>Calling family on video</h3>
+        <p>Getting FaceTime, Zoom, or whatever they're using actually working.</p>
+      </div>
+      <div class="service-row">
+        <h3>Photos and texting</h3>
+        <p>Finding a photo, sending one, figuring out where messages went.</p>
+      </div>
+      <div class="service-row">
+        <h3>Suspicious calls or texts</h3>
+        <p>Talk it through with us before you click or call anyone back.</p>
+      </div>
+      <div class="service-row">
+        <h3>Anything else</h3>
+        <p>If you're stuck and don't know what to call it, just describe it. We'll figure it out together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="security">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">Staying safe</p>
+      <h2>What we will and won't do on a call</h2>
+      <p class="dek">Scammers pose as tech support every day. Here's exactly where we draw the line, so you always know it's really us.</p>
+    </div>
+    <div class="security-grid">
+      <div class="security-item">
+        <h3>We verify identity first</h3>
+        <p>Before touching a password or account, we confirm your name and phone number against what's on file. If it doesn't match, we stop and figure out why.</p>
+      </div>
+      <div class="security-item">
+        <h3>We never ask for payment mid-call</h3>
+        <p>If you didn't set up billing with us ahead of time, we won't ask for a card number, gift cards, or a wire transfer during a support call. Anyone who does isn't us.</p>
+      </div>
+      <div class="security-item">
+        <h3>We won't push for remote access</h3>
+        <p>Most fixes happen just by talking. If a problem genuinely needs someone to see your screen, we'll explain why, and it's always your call whether to allow it.</p>
+      </div>
+      <div class="security-item">
+        <h3>You can always hang up and call back</h3>
+        <p>If anything about a call feels off, hang up and dial (702) 469-8064 yourself. A real support line will never mind you double-checking.</p>
+      </div>
+    </div>
+    <div class="security-callout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <p><strong>If someone calls claiming to be us and asks for money, a gift card, or remote access out of nowhere, it isn't us.</strong> Hang up and call the number on this page directly to confirm.</p>
+    </div>
+  </div>
+</section>
+
+<section id="family">
+  <div class="wrap family-box">
+    <p class="section-num">For families</p>
+    <h2>Set up support for a parent who lives on their own</h2>
+    <p>You're not always around when something breaks. Give them a number they can call themselves, one that's patient, honest, and never pressures them into anything.</p>
+    <button class="big-call-btn" data-call-trigger>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call (702) 469-8064
+    </button>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-num">Before you call</p>
+      <h2>Questions people ask</h2>
+    </div>
+    <div class="faqs">
+      <div class="faq-item">
+        <h3>I don't even know what's wrong. Can I still call?</h3>
+        <p>Yes. Describe what you're seeing or what stopped working. We'll ask a few questions and narrow it down from there.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Will you need to see my screen?</h3>
+        <p>Rarely. Most calls get solved just by talking. If we ever think it's needed, we'll explain why and it's entirely up to you.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What if it's something you can't fix by phone?</h3>
+        <p>We'll tell you plainly and point you toward the right next step instead of stringing the call along.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I know it's really you calling me back?</h3>
+        <p>If you're ever unsure, hang up and dial (702) 469-8064 yourself. That number always reaches us directly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap-wide">
+    <div class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </span>
+      HelpLine Home Tech
+    </div>
+    <button class="big-call-btn" data-call-trigger>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (702) 469-8064
+    </button>
+    <p class="hours-note"><strong>Hours:</strong> Weekdays 3–7 PM · Weekends 10 AM–4 PM, Pacific Time<br>On a computer? Tap the button above for instructions.</p>
+    <p class="fine">HelpLine Home Tech. Warm regards, the HelpLine Home Tech team.</p>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="callModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <p class="modal-eyebrow">You're on a computer</p>
+    <h3 id="modalTitle">Call this number from your phone</h3>
+    <p>We only take calls, so grab a phone or any device that can dial and reach out to us there.</p>
+    <div class="modal-number">(702) 469-8064</div>
+    <p class="modal-copy-note">Tap and hold to copy the number</p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var phoneNumber = "+17024698064";
+    var isMobile = /Android|iPhone|iPad|iPod|Windows Phone|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      || (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.userAgent) && window.matchMedia("(pointer: coarse)").matches);
+
+    var modal = document.getElementById("callModal");
+    var closeBtn = document.getElementById("modalClose");
+    var triggers = document.querySelectorAll("[data-call-trigger]");
+
+    function openModal() {
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    triggers.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (isMobile) {
+          window.location.href = "tel:" + phoneNumber;
+        } else {
+          openModal();
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+  })();
+</script>
+
+</body>
+</html>
